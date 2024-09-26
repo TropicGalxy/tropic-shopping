@@ -22,6 +22,8 @@ add these to your emote menu
       EmoteLoop = true,
       EmoteMoving = true,
    }},
+
+
    ["market2"] = {"missfbi4prepp1", "idle", "Shop with basket", AnimationOptions =
    {
       Prop = "bzzz_prop_shop_basket_b",
