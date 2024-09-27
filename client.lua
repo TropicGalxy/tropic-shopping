@@ -9,7 +9,7 @@ Citizen.CreateThread(function()
             options = {
                 {
                     label = "Grab Basket",
-                    icon = "fas fa-tropic-shoppingping-basket",
+                    icon = "fas fa-shopping-basket",
                     onSelect = function()
                         grabBasket(storeName)
                     end,
@@ -45,7 +45,7 @@ Citizen.CreateThread(function()
             end
 
             if distance > 15.0 and basket then
-                lib.notify({ title = "Basket", description = "You got caught tropic-shopping lifiting and you dropped all the items!", type = 'error' })
+                lib.notify({ title = "Basket", description = "You got caught shop lifiting and you dropped all the items!", type = 'error' })
                 clearBasket()
             end
         end
@@ -63,7 +63,7 @@ function grabBasket(storeName)
         ExecuteCommand('e market')
         basket = true
         basketItems = {}
-        lib.notify({ title = "Basket", description = "You grabbed a tropic-shoppingping basket!" })
+        lib.notify({ title = "Basket", description = "You grabbed a shopping basket!" })
     else
         lib.notify({ title = "Basket", description = "You already have a basket!", type = 'error' })
     end
