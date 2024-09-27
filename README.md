@@ -33,6 +33,9 @@ add these to your emote menu
       EmoteMoving = true,
    }},
 
+
+if you perfer the item images for stuff instead of icons replace line 184 in client with this: icon = "nui://ox_inventory/web/images/"..item.name..".png",
+
 # Links
 [preview](https://youtu.be/u3QC1gm0j6M)
 
