@@ -3,29 +3,58 @@ local basketItems = {}
 
 Citizen.CreateThread(function()
     for storeName, storeData in pairs(Config.Stores) do
-        exports.ox_target:addSphereZone({
-            coords = storeData.basketLocation,
-            radius = 0.9,
-            options = {
-                {
-                    label = "Grab Basket",
-                    icon = "fas fa-shopping-basket",
-                    onSelect = function()
-                        grabBasket(storeName)
-                    end,
+        if Config.Target == 'ox' then
+            exports.ox_target:addSphereZone({
+                coords = storeData.basketLocation,
+                radius = 0.9,
+                options = {
+                    {
+                        label = "Grab Basket",
+                        icon = "fas fa-shopping-basket",
+                        onSelect = function()
+                            grabBasket(storeName)
+                        end,
+                    },
+                    {
+                        label = "Put Away Basket",
+                        icon = "fas fa-trash-alt",
+                        onSelect = function()
+                            putAwayBasket(storeName)
+                        end,
+                        canInteract = function()
+                            return basket
+                        end
+                    }
                 },
-                {
-                    label = "Put Away Basket",
-                    icon = "fas fa-trash-alt",
-                    onSelect = function()
-                        putAwayBasket(storeName)
-                    end,
-                    canInteract = function()
-                        return basket
-                    end
-                }
-            },
-        })
+            })
+        elseif Config.Target == 'qb' then
+            exports['qb-target']:AddBoxZone("basket_"..storeName, storeData.basketLocation, 1.0, 1.0, {
+                name = "basket_"..storeName,
+                heading = 0,
+                debugPoly = false,
+                minZ = storeData.basketLocation.z - 1,
+                maxZ = storeData.basketLocation.z + 1,
+            }, {
+                options = {
+                    {
+                        type = "client",
+                        event = "grabBasket",
+                        icon = "fas fa-shopping-basket",
+                        label = "Grab Basket",
+                    },
+                    {
+                        type = "client",
+                        event = "putAwayBasket",
+                        icon = "fas fa-trash-alt",
+                        label = "Put Away Basket",
+                        canInteract = function()
+                            return basket
+                        end
+                    },
+                },
+                distance = 1.5
+            })
+        end
     end
 end)
 
@@ -108,19 +137,39 @@ end
 Citizen.CreateThread(function()
     for storeName, storeData in pairs(Config.Stores) do
         for _, zone in pairs(storeData.zones) do
-            exports.ox_target:addSphereZone({
-                coords = zone.location,
-                radius = 0.8,
-                options = {
-                    {
-                        label = "Browse " .. zone.label,
-                        icon = "fas fa-box",
-                        onSelect = function()
-                            openItemMenu(zone.items)
-                        end,
-                    }
-                },
-            })
+            if Config.Target == 'ox' then
+                exports.ox_target:addSphereZone({
+                    coords = zone.location,
+                    radius = 0.8,
+                    options = {
+                        {
+                            label = "Browse " .. zone.label,
+                            icon = "fas fa-box",
+                            onSelect = function()
+                                openItemMenu(zone.items)
+                            end,
+                        }
+                    },
+                })
+            elseif Config.Target == 'qb' then
+                exports['qb-target']:AddBoxZone("zone_"..storeName, zone.location, 1.0, 1.0, {
+                    name = "zone_"..storeName,
+                    heading = 0,
+                    debugPoly = false,
+                    minZ = zone.location.z - 1,
+                    maxZ = zone.location.z + 1,
+                }, {
+                    options = {
+                        {
+                            type = "client",
+                            event = "openItemMenu",
+                            icon = "fas fa-box",
+                            label = "Browse " .. zone.label,
+                        },
+                    },
+                    distance = 1.5
+                })
+            end
         end
     end
 end)
@@ -187,19 +236,39 @@ end
 
 Citizen.CreateThread(function()
     for storeName, storeData in pairs(Config.Stores) do
-        exports.ox_target:addSphereZone({
-            coords = storeData.checkoutLocation,
-            radius = 0.7,
-            options = {
-                {
-                    label = "Checkout",
-                    icon = "fas fa-cash-register",
-                    onSelect = function()
-                        checkout(storeName)
-                    end,
-                }
-            },
-        })
+        if Config.Target == 'ox' then
+            exports.ox_target:addSphereZone({
+                coords = storeData.checkoutLocation,
+                radius = 0.7,
+                options = {
+                    {
+                        label = "Checkout",
+                        icon = "fas fa-cash-register",
+                        onSelect = function()
+                            checkout(storeName)
+                        end,
+                    }
+                },
+            })
+        elseif Config.Target == 'qb' then
+            exports['qb-target']:AddBoxZone("checkout_"..storeName, storeData.checkoutLocation, 1.0, 1.0, {
+                name = "checkout_"..storeName,
+                heading = 0,
+                debugPoly = false,
+                minZ = storeData.checkoutLocation.z - 1,
+                maxZ = storeData.checkoutLocation.z + 1,
+            }, {
+                options = {
+                    {
+                        type = "client",
+                        event = "checkout",
+                        icon = "fas fa-cash-register",
+                        label = "Checkout",
+                    },
+                },
+                distance = 1.5
+            })
+        end
     end
 end)
 
@@ -207,30 +276,14 @@ function checkout(storeName)
     if basket then
         local totalCost = 0
         for _, itemData in pairs(basketItems) do
-            totalCost = totalCost + (itemData.count * itemData.price)
+            totalCost = totalCost + (itemData.price * itemData.count)
         end
 
         if totalCost > 0 then
-            lib.registerContext({
-                id = 'checkout_confirm',
-                title = "Total: $" .. totalCost,
-                options = {
-                    {
-                        title = "Confirm Purchase",
-                        icon = "fa-solid fa-check",
-                        onSelect = function()
-                            TriggerServerEvent('tropic-shopping:checkout', totalCost, basketItems)
-                            clearBasket()
-                        end
-                    },
-                    {
-                        title = "Cancel",
-                        icon = "fa-solid fa-times",
-                    }
-                }
-            })
+            TriggerServerEvent('tropic-shopping:checkout', totalCost, basketItems)
 
-            lib.showContext('checkout_confirm')
+            lib.notify({ title = "Basket", description = "Purchase complete! Total cost: $" .. totalCost })
+            clearBasket()
         else
             lib.notify({ title = "Basket", description = "Your basket is empty!", type = 'error' })
         end
