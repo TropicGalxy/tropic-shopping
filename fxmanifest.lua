@@ -19,7 +19,5 @@ client_scripts {
 
 dependencies {
     'qb-core',
-    'ox_inventory',
-    'ox_target',
     'ox_lib'   
 }
