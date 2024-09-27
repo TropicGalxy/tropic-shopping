@@ -1,5 +1,9 @@
 Config = {}
 
+Config.Target = 'ox' -- 'ox' | 'qb'
+
+Config.Inventory = 'ox' -- 'ox' | 'qb'
+
 
 Config.Stores = {
     ["ballas247"] = {
