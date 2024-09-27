@@ -20,20 +20,33 @@ AddEventHandler('tropic-shopping:checkout', function(totalCost, items)
         return
     end
 
-    if xPlayer.Functions.RemoveMoney("cash", totalCost) then
-        for itemName, itemData in pairs(items) do
-            if not exports.ox_inventory:CanCarryItem(src, itemName, itemData.count) then
-                TriggerClientEvent('ox_lib:notify', src, { title = "Inventory", description = "Not enough space in inventory!", type = 'error' })
-                return
+    if Config.Inventory == 'ox' then
+        if exports.ox_inventory:RemoveItem(src, 'cash', totalCost) then
+            for itemName, itemData in pairs(items) do
+                if not exports.ox_inventory:CanCarryItem(src, itemName, itemData.count) then
+                    TriggerClientEvent('ox_lib:notify', src, { title = "Inventory", description = "Not enough space in inventory!", type = 'error' })
+                    return
+                end
             end
-        end
 
-        for itemName, itemData in pairs(items) do
-            xPlayer.Functions.AddItem(itemName, itemData.count)
+            for itemName, itemData in pairs(items) do
+                exports.ox_inventory:AddItem(src, itemName, itemData.count)
+            end
+        else
+            TriggerClientEvent('ox_lib:notify', src, { title = "Checkout", description = "Not enough money to complete purchase!", type = 'error' })
         end
-
-        TriggerClientEvent('ox_lib:notify', src, { title = "Checkout", description = "Items purchased for $" .. totalCost, type = 'success' })
-    else
-        TriggerClientEvent('ox_lib:notify', src, { title = "Checkout", description = "Not enough money to complete purchase!", type = 'error' })
+    elseif Config.Inventory == 'qb' then
+        if xPlayer.Functions.RemoveMoney("cash", totalCost) then
+            for itemName, itemData in pairs(items) do
+                if not xPlayer.Functions.AddItem(itemName, itemData.count) then
+                    TriggerClientEvent('ox_lib:notify', src, { title = "Inventory", description = "Not enough space in inventory!", type = 'error' })
+                    return
+                end
+            end
+        else
+            TriggerClientEvent('ox_lib:notify', src, { title = "Checkout", description = "Not enough money to complete purchase!", type = 'error' })
+        end
     end
+
+    TriggerClientEvent('ox_lib:notify', src, { title = "Checkout", description = "Items purchased for $" .. totalCost, type = 'success' })
 end)
