@@ -29,13 +29,33 @@ Citizen.CreateThread(function()
     end
 end)
 
+function getNearestStore(playerCoords)
+    local nearestStore = nil
+    local nearestDistance = math.huge
+
+    for storeName, storeData in pairs(Config.Stores) do
+        local basketCoords = storeData.basketLocation
+        local distance = #(playerCoords - basketCoords)
+
+        if distance < nearestDistance then
+            nearestDistance = distance
+            nearestStore = storeName
+        end
+    end
+
+    return nearestStore
+end
+
 Citizen.CreateThread(function()
     while true do
         local playerPed = PlayerPedId()
         local playerCoords = GetEntityCoords(playerPed)
         local shouldWait = true
 
-        for storeName, storeData in pairs(Config.Stores) do
+        local nearestStore = getNearestStore(playerCoords)
+
+        if nearestStore then
+            local storeData = Config.Stores[nearestStore]
             local basketCoords = storeData.basketLocation
             local distance = #(playerCoords - basketCoords)
 
@@ -45,7 +65,7 @@ Citizen.CreateThread(function()
             end
 
             if distance > 15.0 and basket then
-                lib.notify({ title = "Basket", description = "You got caught shop lifiting and you dropped all the items!", type = 'error' })
+                lib.notify({ title = "Basket", description = "You got caught shoplifting and dropped all the items!", type = 'error' })
                 clearBasket()
             end
         end
