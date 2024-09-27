@@ -45,7 +45,6 @@ Citizen.CreateThread(function()
             end
 
             if distance > 15.0 and basket then
-                exports['ps-dispatch']:tropic-shoppingLifting()
                 lib.notify({ title = "Basket", description = "You got caught tropic-shopping lifiting and you dropped all the items!", type = 'error' })
                 clearBasket()
             end
