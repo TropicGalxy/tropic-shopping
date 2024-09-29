@@ -38,17 +38,21 @@ Citizen.CreateThread(function()
                 options = {
                     {
                         type = "client",
-                        event = "grabBasket",
                         icon = "fas fa-shopping-basket",
                         label = "Grab Basket",
+                        action = function()
+                            grabBasket(storeName)
+                        end
                     },
                     {
                         type = "client",
-                        event = "putAwayBasket",
                         icon = "fas fa-trash-alt",
                         label = "Put Away Basket",
                         canInteract = function()
                             return basket
+                        end,
+                        action = function()
+                            putAwayBasket(storeName)
                         end
                     },
                 },
@@ -162,10 +166,12 @@ Citizen.CreateThread(function()
                     options = {
                         {
                             type = "client",
-                            event = "openItemMenu",
                             icon = "fas fa-box",
                             label = "Browse " .. zone.label,
-                        },
+                            action = function()
+                                openItemMenu(zone.items)
+                            end
+                        }
                     },
                     distance = 1.5
                 })
@@ -181,7 +187,7 @@ function openItemMenu(items)
         table.insert(contextMenu, {
             title = item.label .. " ($" .. item.price .. ")",
             description = "Add to basket",
-            icon = item.icon,
+            icon = "nui://ox_inventory/web/images/"..item.name..".png",
             onSelect = function()
                 promptItemQuantity(item)
             end
@@ -261,9 +267,11 @@ Citizen.CreateThread(function()
                 options = {
                     {
                         type = "client",
-                        event = "checkout",
                         icon = "fas fa-cash-register",
                         label = "Checkout",
+                        action = function()
+                            checkout(storeName)
+                        end
                     },
                 },
                 distance = 1.5
