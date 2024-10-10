@@ -57,6 +57,8 @@ skully emote menu:
                 },
             },
         },
+
+        
         {
             Label = 'Market2',
             Command = 'market2',
