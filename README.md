@@ -14,7 +14,7 @@ any kind of emote menu
 
 add these to your emote menu
 
-["market"] = {"missfbi4prepp1", "idle", "Shop with basket", AnimationOptions =
+```["market"] = {"missfbi4prepp1", "idle", "Shop with basket", AnimationOptions =
    {
       Prop = "bzzz_prop_shop_basket_a",
       PropBone = 57005,
@@ -24,7 +24,7 @@ add these to your emote menu
    }},
 
 
-   ["market2"] = {"missfbi4prepp1", "idle", "Shop with basket", AnimationOptions =
+  ["market2"] = {"missfbi4prepp1", "idle", "Shop with basket", AnimationOptions =
    {
       Prop = "bzzz_prop_shop_basket_b",
       PropBone = 57005,
@@ -78,7 +78,7 @@ skully emote menu:
                     },
                 },
             },
-        },```
+        },
 
 
 
