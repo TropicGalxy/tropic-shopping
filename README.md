@@ -33,6 +33,55 @@ add these to your emote menu
       EmoteMoving = true,
    }},
 
+skully emote menu:
+
+{
+            Label = 'Market1',
+            Command = 'market',
+            Animation = 'idle',
+            Dictionary = 'missfbi4prepp1',
+            Options = {
+                Flags = {
+                    Loop = true,
+                    Move = true,
+                },
+                Props = {
+                    {
+                        Bone = 57005,
+                        Name = 'bzzz_prop_shop_basket_a',
+                        Placement = {
+                            vector3(0.34, -0.25, -0.24),
+                            vector3(-146.0, 115.0, 19.0),
+                        },
+                    },
+                },
+            },
+        },
+        {
+            Label = 'Market2',
+            Command = 'market2',
+            Animation = 'idle',
+            Dictionary = 'missfbi4prepp1',
+            Options = {
+                Flags = {
+                    Loop = true,
+                    Move = true,
+                },
+                Props = {
+                    {
+                        Bone = 57005,
+                        Name = 'bzzz_prop_shop_basket_b',
+                        Placement = {
+                            vector3(0.34, -0.25, -0.24),
+                            vector3(-146.0, 115.0, 19.0),
+                        },
+                    },
+                },
+            },
+        },
+
+
+
 
 if you perfer the item images for stuff instead of icons replace line 184 in client with this: 
 
