@@ -35,7 +35,7 @@ add these to your emote menu
 
 skully emote menu:
 
-```{
+{
             Label = 'Market1',
             Command = 'market',
             Animation = 'idle',
