@@ -33,7 +33,7 @@ add these to your emote menu
       EmoteMoving = true,
    }},
 
-scully_emotmenu
+scully_emotemenu
 
 ```{
             Label = 'Market 1',
