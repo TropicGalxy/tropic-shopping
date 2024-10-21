@@ -33,10 +33,10 @@ add these to your emote menu
       EmoteMoving = true,
    }},
 
-skully emote menu:
+scully_emotmenu
 
-{
-            Label = 'Market1',
+```{
+            Label = 'Market 1',
             Command = 'market',
             Animation = 'idle',
             Dictionary = 'missfbi4prepp1',
@@ -58,7 +58,7 @@ skully emote menu:
             },
         },
         {
-            Label = 'Market2',
+            Label = 'Market 2',
             Command = 'market2',
             Animation = 'idle',
             Dictionary = 'missfbi4prepp1',
@@ -79,7 +79,6 @@ skully emote menu:
                 },
             },
         },
-
 
 
 if you perfer the item images for stuff instead of icons replace line 184 in client with this: 
