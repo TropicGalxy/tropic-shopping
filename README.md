@@ -35,7 +35,7 @@ add these to your emote menu
 
 scully_emotemenu
 
-```{
+{
             Label = 'Market 1',
             Command = 'market',
             Animation = 'idle',
