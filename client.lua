@@ -156,8 +156,8 @@ Citizen.CreateThread(function()
                     },
                 })
             elseif Config.Target == 'qb' then
-                exports['qb-target']:AddBoxZone("zone_"..storeName, zone.location, 1.0, 1.0, {
-                    name = "zone_"..storeName,
+                exports['qb-target']:AddBoxZone("zone_" .. storeName .. "_" .. zone.label, zone.location, 1.0, 1.0, {
+                    name = "zone_" .. storeName .. "_" .. zone.label,
                     heading = 0,
                     debugPoly = false,
                     minZ = zone.location.z - 1,
