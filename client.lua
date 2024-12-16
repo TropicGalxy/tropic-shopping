@@ -1,7 +1,7 @@
 local basket = false
 local basketItems = {}
 
-Citizen.CreateThread(function()
+CreateThread(function()
     for storeName, storeData in pairs(Config.Stores) do
         if Config.Target == 'ox' then
             exports.ox_target:addSphereZone({
@@ -79,7 +79,7 @@ function getNearestStore(playerCoords)
     return nearestStore
 end
 
-Citizen.CreateThread(function()
+CreateThread(function()
     while true do
         local playerPed = PlayerPedId()
         local playerCoords = GetEntityCoords(playerPed)
@@ -138,7 +138,7 @@ function clearBasket()
     lib.notify({ title = "Basket", description = "You no longer have a basket." })
 end
 
-Citizen.CreateThread(function()
+CreateThread(function()
     for storeName, storeData in pairs(Config.Stores) do
         for _, zone in pairs(storeData.zones) do
             if Config.Target == 'ox' then
@@ -240,7 +240,7 @@ function addItemToBasket(item, quantity)
     end
 end
 
-Citizen.CreateThread(function()
+CreateThread(function()
     for storeName, storeData in pairs(Config.Stores) do
         if Config.Target == 'ox' then
             exports.ox_target:addSphereZone({
