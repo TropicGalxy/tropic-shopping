@@ -1,8 +1,26 @@
 Config = {}
 
-Config.Target = 'ox' -- 'ox' | 'qb'
+Config.Target = 'qb' -- 'ox' | 'qb'
 
-Config.Inventory = 'ox' -- 'ox' | 'qb'
+Config.Inventory = 'qb' -- 'ox' | 'qb'
+
+
+Config.Blips = true
+Config.TheBlips = {
+    { title = "Ballas 24/7", colour = 1, id = 59, vector3 = vector3(-54.21, -1754.48, 29.42) },
+    { title = "Legion 24/7", colour = 1, id = 59, vector3 = vector3(30.78, -1348.47, 29.5) },
+    { title = "Ltdgasstation", colour = 1, id = 59, vector3 = vector3(-714.03, -915.61, 19.22) },
+    { title = "Mirrorparkgasstation", colour = 1, id = 59, vector3 = vector3(1157.21, -326.21, 69.21) },
+    { title = "Vinewood 24/7", colour = 1, id = 59, vector3(378.39, 323.76, 103.57) },
+    { title = "Route 15 24/7", colour = 1, id = 59, vector3 = vector3(2558.62, 387.11, 108.62) },
+    { title = "Insenoroad 24/7", colour = 1, id = 59, vector3 = vector3(-3039.79, 590.9, 7.91) },
+    { title = "Barbarenoroad 24/7", colour = 1, id = 59, vector3(-3240.56, 1006.26, 12.83) },
+    { title = "Route 68 24/7", colour = 1, id = 59, vector3 = vector3(542.62, 2671.61, 42.16) },
+    { title = "Mntgourdo 24/7", colour = 1, id = 59, vector3 = vector3(1733.13, 6411.36, 35.04) },
+    { title = "Grapeseedltd", colour = 1, id = 59, vector3 = vector3(1700.85, 4930.59, 42.06) },
+    { title = "Route13 24/7", colour = 1, id = 59, vector3 = vector3(2682.14, 3284.39, 55.24) },
+    { title = "Sandy 24/7", colour = 1, id = 59, vector3 = vector3(1966.17, 3742.18, 32.34) },
+}
 
 Config.Stores = {
     ["ballas247"] = {
