@@ -33,6 +33,38 @@ add these to your emote menu
       EmoteMoving = true,
    }},
 
+
+For rpemote
+
+
+ ["market"] = {
+        "missfbi4prepp1",
+        -- "base",
+        -- "Umbrella",
+        AnimationOptions = {
+            Prop = "bzzz_prop_shop_basket_a",
+            PropBone = 57005,
+            PropPlacement = {
+                0.34, -0.25, -0.24, -146.0, 115.0, 19.0
+            },
+            EmoteLoop = true,
+            EmoteMoving = true
+        }
+    },
+["market"] = {
+        "missfbi4prepp1",
+        AnimationOptions = {
+            Prop = "bzzz_prop_shop_basket_b",
+            PropBone = 57005,
+            PropPlacement = {
+                0.34, -0.25, -0.24, -146.0, 115.0, 19.0
+            },
+            EmoteLoop = true,
+            EmoteMoving = true
+        }
+    },
+
+
 scully_emotemenu
 
 {
@@ -79,6 +111,8 @@ scully_emotemenu
                 },
             },
         },
+
+        
 
 
 if you perfer the item images for stuff instead of icons replace line 184 in client with this: 
