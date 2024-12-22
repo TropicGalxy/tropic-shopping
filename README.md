@@ -14,33 +14,11 @@ any kind of emote menu
 
 add these to your emote menu
 
-["market"] = {"missfbi4prepp1", "idle", "Shop with basket", AnimationOptions =
-   {
-      Prop = "bzzz_prop_shop_basket_a",
-      PropBone = 57005,
-      PropPlacement = {0.34, -0.25, -0.24, -146.0, 115.0, 19.0},
-      EmoteLoop = true,
-      EmoteMoving = true,
-   }},
-
-
-  ["market2"] = {"missfbi4prepp1", "idle", "Shop with basket", AnimationOptions =
-   {
-      Prop = "bzzz_prop_shop_basket_b",
-      PropBone = 57005,
-      PropPlacement = {0.34, -0.25, -0.24, -146.0, 115.0, 19.0},
-      EmoteLoop = true,
-      EmoteMoving = true,
-   }},
-
-
-For rpemote
+**RP Emotes**
 
 
  ["market"] = {
         "missfbi4prepp1",
-        -- "base",
-        -- "Umbrella",
         AnimationOptions = {
             Prop = "bzzz_prop_shop_basket_a",
             PropBone = 57005,
@@ -65,7 +43,7 @@ For rpemote
     },
 
 
-scully_emotemenu
+**Scully Emotes**
 
 {
             Label = 'Market 1',
