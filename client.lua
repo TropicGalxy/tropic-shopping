@@ -2,9 +2,9 @@ local basket = false
 local basketItems = {}
 
 
-if Config.Blips then
-    Citizen.CreateThread(function()
-        for _, info in pairs(Config.TheBlips) do
+if Config.EnableBlips then
+    CreateThread(function()
+        for _, info in pairs(Config.Blips) do
             if info.vector3 and info.title and info.id and info.colour then
                 local blip = AddBlipForCoord(info.vector3.x, info.vector3.y, info.vector3.z)
                 
@@ -18,7 +18,7 @@ if Config.Blips then
                 AddTextComponentString(info.title)
                 EndTextCommandSetBlipName(blip)
             else
-                print("Warning: Invalid blip data (Config.TheBlips)")
+                print("Warning: Invalid blip data (Config.Blips)")
             end
         end
     end)
