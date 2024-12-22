@@ -5,7 +5,7 @@ Config.Target = 'ox' -- 'ox' | 'qb'
 Config.Inventory = 'ox' -- 'ox' | 'qb'
 
 
-Config.Blips = true
+Config.EnableBlips = true
 Config.Blips = {
     { title = "Ballas 24/7", colour = 1, id = 59, vector3 = vector3(-54.21, -1754.48, 29.42) },
     { title = "Legion 24/7", colour = 1, id = 59, vector3 = vector3(30.78, -1348.47, 29.5) },
