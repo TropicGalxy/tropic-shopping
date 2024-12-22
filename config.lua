@@ -1,8 +1,8 @@
 Config = {}
 
-Config.Target = 'qb' -- 'ox' | 'qb'
+Config.Target = 'ox' -- 'ox' | 'qb'
 
-Config.Inventory = 'qb' -- 'ox' | 'qb'
+Config.Inventory = 'ox' -- 'ox' | 'qb'
 
 
 Config.Blips = true
