@@ -29,7 +29,7 @@ add these to your emote menu
             EmoteMoving = true
         }
     },
-["market"] = {
+["market2"] = {
         "missfbi4prepp1",
         AnimationOptions = {
             Prop = "bzzz_prop_shop_basket_b",
