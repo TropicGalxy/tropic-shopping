@@ -160,8 +160,14 @@ CreateThread(function()
             end
 
             if distance > 15.0 and basket then
-                lib.notify({ title = "Basket", description = "You got caught shoplifting and dropped all the items!", type = 'error' })
-                clearBasket()
+                if Config.UseDispatch then
+                    lib.notify({ title = "Basket", description = "You got caught shoplifting and dropped all the items!", type = 'error' })
+                    clearBasket()
+                    exports['ps-dispatch']:basketrobbery()
+                else
+                    lib.notify({ title = "Basket", description = "You got caught shoplifting and dropped all the items!", type = 'error' })
+                    clearBasket()
+                end
             end
         end
 
@@ -172,6 +178,7 @@ CreateThread(function()
         end
     end
 end)
+
 
 function grabBasket(storeName)
     local storeData = Config.Stores[storeName]
