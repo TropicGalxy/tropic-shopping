@@ -4,7 +4,7 @@ game 'gta5'
 lua54 'yes'
 author 'TropicGalxy'
 description 'a fun way to shop'
-version '1.0.0'
+version '1.5'
 
 shared_script 'config.lua'
 
