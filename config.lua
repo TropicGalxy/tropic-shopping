@@ -4,6 +4,8 @@ Config.Target = 'ox' -- 'ox' | 'qb'
 
 Config.Inventory = 'ox' -- 'ox' | 'qb'
 
+Config.UseDispatch = true -- true | false | requires ps-dispatch
+
 Config.EnableBlips = false
 Config.Blips = {
     { title = "Ballas 24/7", colour = 1, id = 59, vector3 = vector3(-54.21, -1754.48, 29.42) },
