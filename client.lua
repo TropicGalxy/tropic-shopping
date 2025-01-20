@@ -1,7 +1,6 @@
 local basket = false
 local basketItems = {}
 
-
 if Config.EnableBlips then
     CreateThread(function()
         for _, info in pairs(Config.Blips) do
@@ -85,6 +84,46 @@ CreateThread(function()
     end
 end)
 
+CreateThread(function()
+    for storeName, storeData in pairs(Config.Stores) do
+        if Config.Target == 'ox' then
+            exports.ox_target:addSphereZone({
+                coords = storeData.checkoutLocation,
+                radius = 0.7,
+                options = {
+                    {
+                        label = "Checkout",
+                        icon = "fas fa-cash-register",
+                        onSelect = function()
+                            checkout(storeName)
+                        end,
+                    }
+                },
+            })
+        elseif Config.Target == 'qb' then
+            exports['qb-target']:AddBoxZone("checkout_"..storeName, storeData.checkoutLocation, 1.0, 1.0, {
+                name = "checkout_"..storeName,
+                heading = 0,
+                debugPoly = false,
+                minZ = storeData.checkoutLocation.z - 1,
+                maxZ = storeData.checkoutLocation.z + 1,
+            }, {
+                options = {
+                    {
+                        type = "client",
+                        icon = "fas fa-cash-register",
+                        label = "Checkout",
+                        action = function()
+                            checkout(storeName)
+                        end
+                    },
+                },
+                distance = 1.5
+            })
+        end
+    end
+end)
+
 function getNearestStore(playerCoords)
     local nearestStore = nil
     local nearestDistance = math.huge
@@ -135,11 +174,35 @@ CreateThread(function()
 end)
 
 function grabBasket(storeName)
+    local storeData = Config.Stores[storeName]
     if not basket then
-        ExecuteCommand('e market')
-        basket = true
-        basketItems = {}
-        lib.notify({ title = "Basket", description = "You grabbed a shopping basket!" })
+        if storeData then
+            if storeData.storeType == "Grocery" then
+                ExecuteCommand('e market')
+                basket = true
+                basketItems = {}
+                lib.notify({ title = "Basket", description = "You grabbed a shopping basket!" })
+            elseif storeData.storeType == "Gun" then
+                ExecuteCommand('e guncase')
+                basket = true
+                basketItems = {}
+                lib.notify({ title = "Basket", description = "You grabbed a gun case!" })
+            elseif storeData.storeType == "Leisure" then
+                ExecuteCommand('e dufbag')
+                basket = true
+                basketItems = {}
+                lib.notify({ title = "Basket", description = "You grabbed a shopping bag!" })
+            elseif storeData.storeType == "Other" then
+                ExecuteCommand('e shopbag3')
+                basket = true
+                basketItems = {}
+                lib.notify({ title = "Basket", description = "You grabbed a shopping bag!" })
+            else
+                lib.notify({ title = "Basket", description = "This store type does not exist!", type = 'error' })
+            end
+        else
+            lib.notify({ title = "Basket", description = "Invalid store data!", type = 'error' })
+        end
     else
         lib.notify({ title = "Basket", description = "You already have a basket!", type = 'error' })
     end
@@ -234,26 +297,40 @@ function promptItemQuantity(item)
     if input then
         local quantity = tonumber(input[1])
         if quantity and quantity > 0 then
-            addItemToBasket(item, quantity)
+            local storeData = Config.Stores[getNearestStore(GetEntityCoords(PlayerPedId()))]
+            addItemToBasket(storeData, item, quantity)
         else
             lib.notify({ title = "Basket", description = "Invalid quantity!", type = 'error' })
         end
     end
 end
 
-function addItemToBasket(item, quantity)
+function addItemToBasket(storeData, item, quantity)
     if basket then
-        if not basketItems[item.name] then
-            basketItems[item.name] = { label = item.label, count = 0, price = item.price }
-        end
-        basketItems[item.name].count = basketItems[item.name].count + quantity
-        ExecuteCommand('e market2')
+        if storeData.storeType == "Grocery" then
+            if not basketItems[item.name] then
+                basketItems[item.name] = { label = item.label, count = 0, price = item.price }
+            end
+            basketItems[item.name].count = basketItems[item.name].count + quantity
+            ExecuteCommand('e market2')
 
-        lib.notify({
-            title = "Basket",
-            description = "Added " .. quantity .. "x " .. item.label .. " to your basket!",
-            type = 'success'
-        })
+            lib.notify({
+                title = "Basket",
+                description = "Added " .. quantity .. "x " .. item.label .. " to your basket!",
+                type = 'success'
+            })
+        else
+            if not basketItems[item.name] then
+                basketItems[item.name] = { label = item.label, count = 0, price = item.price }
+            end
+            basketItems[item.name].count = basketItems[item.name].count + quantity
+
+            lib.notify({
+                title = "Basket",
+                description = "Added " .. quantity .. "x " .. item.label .. " to your basket!",
+                type = 'success'
+            })
+        end
     else
         lib.notify({
             title = "Basket",
@@ -263,46 +340,6 @@ function addItemToBasket(item, quantity)
     end
 end
 
-CreateThread(function()
-    for storeName, storeData in pairs(Config.Stores) do
-        if Config.Target == 'ox' then
-            exports.ox_target:addSphereZone({
-                coords = storeData.checkoutLocation,
-                radius = 0.7,
-                options = {
-                    {
-                        label = "Checkout",
-                        icon = "fas fa-cash-register",
-                        onSelect = function()
-                            checkout(storeName)
-                        end,
-                    }
-                },
-            })
-        elseif Config.Target == 'qb' then
-            exports['qb-target']:AddBoxZone("checkout_"..storeName, storeData.checkoutLocation, 1.0, 1.0, {
-                name = "checkout_"..storeName,
-                heading = 0,
-                debugPoly = false,
-                minZ = storeData.checkoutLocation.z - 1,
-                maxZ = storeData.checkoutLocation.z + 1,
-            }, {
-                options = {
-                    {
-                        type = "client",
-                        icon = "fas fa-cash-register",
-                        label = "Checkout",
-                        action = function()
-                            checkout(storeName)
-                        end
-                    },
-                },
-                distance = 1.5
-            })
-        end
-    end
-end)
-
 function checkout(storeName)
     if basket then
         local totalCost = 0
@@ -311,8 +348,7 @@ function checkout(storeName)
         end
 
         if totalCost > 0 then
-            TriggerServerEvent('tropic-shopping:checkout', totalCost, basketItems)
-
+            TriggerServerEvent('tropic-shopping:checkout', storeName, basketItems)
             lib.notify({ title = "Basket", description = "Purchase complete! Total cost: $" .. totalCost })
             clearBasket()
         else
