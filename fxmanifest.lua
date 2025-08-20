@@ -17,7 +17,3 @@ client_scripts {
     'client.lua'
 }
 
-dependencies {
-    'qb-core',
-    'ox_lib'   
-}
